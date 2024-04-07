@@ -1,0 +1,115 @@
+/* HEADER STYLE */
+
+.header_main{
+    width: 100vw;
+    height: 80px;
+    background-color: #0A1551;
+    position: fixed;
+    z-index: 999;
+}
+
+
+
+
+
+/* SITEBAR CSS */
+.sitebar_main{
+     width: 20%;
+     min-height: 100vh;
+     height: auto;
+     background-color: #f3f3fe;
+     position: fixed;
+}
+.sidebar_head{
+    width: 100%;
+    height: auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 1px solid #d4d4f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.side_head_btn{
+    width: 90% !important;
+    margin: auto;
+    padding: 1rem !important;
+    font-size: 17px !important;
+    text-transform: capitalize !important;
+}
+.menu_heading{
+    font-size: 20px;
+    text-align: left;
+    color: #616164;
+    margin: 10px;
+    font-family:  "Roboto", sans-serif;
+}
+
+.menu_list{
+    font-family:  "Roboto", sans-serif;
+    font-size: 19px !important;
+    font-weight: 400;
+    gap: 10px !important;
+
+}
+.menu{
+    width: 95%;
+    margin: auto !important;
+    border-radius: 5px !important;
+}
+
+.active_menu{
+    background-color: #c8ceed !important;
+}
+
+
+.menu_dots:hover{
+    background-color: transparent !important;
+    margin-left: 1rem;
+}
+
+/* FORM STYLE */
+.form_Card{
+    width: 95%;
+    margin: auto;
+    border-radius: 5px;
+    height: 70px;
+    transition: 0.3s all ease-in-out;
+}
+
+.form_Card:hover{
+    background-color: #edf8ff;
+    cursor: pointer;
+}
+
+.form_Card{
+    display: flex;
+    justify-content: space-between;
+    color: #616164 !important;
+}
+
+.form_Card h5{
+    margin: 0;
+    color: #333336 !important;
+
+}
+
+.form_Card div{
+ width: 50%;
+}
+
+.form_Card .form_card_1{
+    /* width: 100%; */
+ width: 50%;
+    display: flex;
+    align-items: center;
+    /* background-color: #0A1551; */
+}
+
+.form_card_2{
+    display: flex;
+    justify-content: end;
+    padding-right: 2%;
+    /* background-color: rebeccapurple; */
+}

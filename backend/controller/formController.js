@@ -53,3 +53,12 @@ export const updateForm = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 400))
     }
 }
+
+export const getAllForms = async (req, res, next) => {
+
+    const forms = await prisma.form.findMany({})
+    res.status(200).json({
+        success: true,
+        data: forms
+    })
+}
