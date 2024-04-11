@@ -1,11 +1,13 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { thunk } from 'redux-thunk'
-import { addForm, formReducer } from './reducer/formReducer'
+import { addForm, checkboxElementReducer, formReducer, inputElementReducer } from './reducer/formReducer'
 
 
 const reducers = combineReducers({
     forms: formReducer,
-    newForm: addForm
+    newForm: addForm,
+    TextInput: inputElementReducer,
+    // CheckboxElement: checkboxElementReducer
 
 })
 

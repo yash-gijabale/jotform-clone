@@ -9,8 +9,11 @@ import MenuItem from "@mui/joy/MenuItem";
 import MoreVert from "@mui/icons-material/MoreVert";
 
 import Checkbox from "@mui/joy/Checkbox";
+import { Link } from "react-router-dom";
 
-const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen}) => {
+import formIcon from "../asset/fileIcon2.png";
+
+const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen }) => {
   const handleChange = (e) => {
     console.log(e.target.checked);
     if (e.target.checked) {
@@ -19,18 +22,26 @@ const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen}) => {
       setDeleteProductIds((pre) => {
         return [...pre, e.target.value];
       });
+    } else {
+      setDeleteProductIds((pre) => {
+        let Newpre = pre.filter((id) => {
+          return id !== e.target.value;
+        });
+
+        return Newpre;
+      });
     }
   };
 
-  const deleteForm = (formId) =>{
-    setOpen((pre)=>{
-      return !pre
-    })
+  const deleteForm = (formId) => {
+    setOpen((pre) => {
+      return !pre;
+    });
 
-    setDeleteFormId((pre) =>{
-      return formId
-    })
-  }
+    setDeleteFormId((pre) => {
+      return formId;
+    });
+  };
   return (
     <div className="form_Card">
       <div className="form_card_1">
@@ -44,6 +55,9 @@ const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen}) => {
           <Checkbox value={form.id} onChange={(e) => handleChange(e)} />
           {/* <Checkbox /> */}
         </div>
+        <div style={{ width: "10%" }}>
+          <img src={formIcon} style={{ height: "40px" }} />
+        </div>
         <div
           style={{
             width: "80%",
@@ -55,7 +69,7 @@ const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen}) => {
           }}
         >
           <h5 style={{ fontSize: "20px" }}>{form.name}</h5>
-          <span>5 submissions. Updated on 27, Mar, 2024</span>
+          <span> <Link to={`/table/${form.id}`}>5 submissions.</Link> Updated on {new Date(form.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
         </div>
       </div>
       <div className="form_card_2">
@@ -68,10 +82,16 @@ const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen}) => {
             <MoreVert />
           </MenuButton>
           <Menu>
-            <MenuItem>Edit</MenuItem>
-            <MenuItem>View</MenuItem>
+            <MenuItem>
+              <Link to={`/build/${form.id}`}>Edit</Link>
+            </MenuItem>
+            <MenuItem>
+              <Link to={`/view/${form.id}`} target="_blank">View</Link>
+            </MenuItem>
             <MenuItem>Deactive</MenuItem>
-            <MenuItem sx={{ color: "red" }}  onClick={() =>deleteForm(form.id)} >Delete</MenuItem>
+            <MenuItem sx={{ color: "red" }} onClick={() => deleteForm(form.id)}>
+              Delete
+            </MenuItem>
           </Menu>
         </Dropdown>
       </div>

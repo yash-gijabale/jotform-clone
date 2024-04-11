@@ -1,0 +1,160 @@
+.build_container {
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #f3f3fe;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    top: 7rem;
+    
+}
+
+.field_box {
+    width: 20%;
+    min-height: 100vh;
+    /* background-color: red; */
+
+
+}
+
+
+
+.property_box {
+    width: 20%;
+    min-height: 100vh;
+    background-color:#3e4652;
+    position: fixed;
+    padding-top: 1.5rem;
+}
+
+
+.property_box_hide{
+    left: 100%;
+}
+
+.property_box_show{
+    left: 80%;
+}
+
+.field_container {
+    width: 20vw;
+    min-height: 100vh;
+    background-color:#3e4652;
+    position: fixed;
+    top: 15%;
+    padding-top: 2rem;
+    /* padding-right: 1rem; */
+    color: white;
+    transition: 0.5s all ease-in-out;
+
+}
+
+.filed_container_show {
+    left: 0%;
+}
+
+.filed_container_hide {
+    left: -50%;
+}
+
+.field_toggle {
+    width: 80%;
+    height: 70px;
+    border-radius: 10px 50px 50px 10px;
+    background-color: #3e4652;
+    position: relative;
+    top: 15%;
+    /* left: -25%; */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1rem;
+    font-size: 15px;
+    color: white;
+    cursor: pointer;
+    transition: 0.5s all ease-in-out;
+
+}
+
+.element_btn_show {
+    left: -25%;
+}
+
+
+.element_btn_hide {
+    left: -100%;
+}
+
+/* .build_container{
+    width: 95%;
+    margin: auto;
+    min-height: 80vh;
+    background-color: white;
+    border-radius: 5px;
+} */
+
+.build_area {
+    width: 60%;
+    min-height: 100vh;
+    height: 80vh;
+    /* background-color: #3e4652; */
+}
+.form_box{
+    width: 95%;
+    height: 80%;
+    margin: auto;
+    min-height: 80vh;
+    border-radius: 5px;
+    background-color: #ffffff;
+    position: relative;
+    top: 3%;
+    padding: 4rem 0 0 1rem;
+    overflow-y: auto;
+
+}
+
+.element_box{
+    width: 100%;
+    display: flex;
+    /* background-color: #f3f3fe; */
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.element_box:hover .element{
+    border: 1px solid rgb(123, 178, 241);
+
+}
+
+.element_box:hover .property{
+    visibility: visible;
+    
+}
+
+
+
+.element{
+    width: 90% !important;
+    margin: 1rem auto;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+
+.property{
+    /* background-color: #3e4652; */
+    width: 10%;
+    height: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    visibility: hidden;
+}
+
+.element_list{
+    width: 100%;
+    margin-top: 2rem;
+
+}

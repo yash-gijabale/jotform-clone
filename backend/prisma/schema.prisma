@@ -14,11 +14,21 @@ datasource db {
 }
 
 model Form {
-  id         String    @id @default(uuid())
-  name       String    @db.VarChar(255)
-  properties String?
-  createdAt  DateTime  @default(now())
-  publish    Boolean   @default(false)
-  updaedAt   DateTime?
-  active     Boolean   @default(true)
+  id          String       @id @default(uuid())
+  name        String       @db.VarChar(255)
+  properties  Json?
+  columns     Json?
+  createdAt   DateTime     @default(now())
+  publish     Boolean      @default(false)
+  updatedAt   String?
+  active      Boolean      @default(true)
+  submissions Submission[]
+}
+
+model Submission {
+  id        Int      @id @default(autoincrement())
+  form      Form     @relation(fields: [formId], references: [id])
+  responce  Json
+  formId    String
+  createdAt DateTime @default(now())
 }

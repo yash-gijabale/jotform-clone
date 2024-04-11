@@ -1,0 +1,7 @@
+.table_container{
+    width: 100vw;
+    min-height: 100vh;
+    position: relative;
+    /* background-color: aqua; */
+    top: 6rem;
+}

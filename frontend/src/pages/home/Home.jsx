@@ -13,7 +13,11 @@ import Sheet from "@mui/joy/Sheet";
 import Button from "@mui/joy/Button";
 import Input from "@mui/joy/Input";
 
+import axios from "axios";
+
 const Home = () => {
+  const dispatch = useDispatch();
+
   const [open, setOpen] = useState(false);
 
   const [allForms, setAllForms] = useState([]);
@@ -28,7 +32,14 @@ const Home = () => {
     setAllForms(forms);
   }, [forms]);
 
-  const deleteForm = () => {};
+  const deleteForm = async () => {
+    if (deleteFormId != "") {
+      const { data } = await axios.delete(`/api/v1/form/${deleteFormId}`);
+      console.log(data);
+      setOpen(false);
+      dispatch(getAllForms());
+    }
+  };
 
   // console.log(allForms);
 
@@ -37,10 +48,29 @@ const Home = () => {
   const searchForm = (e) => {
     setSearch(e.target.value);
     let filteredForm = allForms.filter((form) => {
-      return form.name.toLowerCase().includes(e.target.value.toLowerCase()) && form;
+      return (
+        form.name.toLowerCase().includes(e.target.value.toLowerCase()) && form
+      );
     });
 
     setFilterForms(filteredForm);
+  };
+
+  const deleteManyForms = async () => {
+    if (deleteProductIds.length) {
+      const deletedFoms = await axios.post(
+        "/api/v1/form/deleteMany/delete",
+        { formIds: deleteProductIds },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
+    setDeleteProductIds([])
+    dispatch(getAllForms());
   };
 
   // console.log(search);
@@ -52,6 +82,18 @@ const Home = () => {
         <Sitebar />
         <div className="home_view">
           <div className="filter_container">
+            {deleteProductIds.length ? (
+              <Button
+                variant="outlined"
+                color="danger"
+                sx={{ marginRight: 5 }}
+                onClick={deleteManyForms}
+              >
+                Delete All ({deleteProductIds.length})
+              </Button>
+            ) : (
+              ""
+            )}
             <Input
               size="lg"
               type="search"
