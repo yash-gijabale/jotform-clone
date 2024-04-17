@@ -77,7 +77,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      <Header />
+      <Header bg={"#0A1551"} />
       <div className="home_main">
         <Sitebar />
         <div className="home_view">

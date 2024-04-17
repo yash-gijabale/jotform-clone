@@ -37,7 +37,9 @@ const View = () => {
     e.preventDefault()
 
     let submitData = Object.fromEntries(new FormData(e.target))
+    submitData['submissionDate'] = new Date().toISOString().substring(0, 10)
     console.log(submitData)
+    // return
 
     const {data} = await axios.post(`/api/v1/form/submit/${id}`, submitData, {
       headers: {

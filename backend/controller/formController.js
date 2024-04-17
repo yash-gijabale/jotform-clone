@@ -56,10 +56,23 @@ export const updateForm = async (req, res, next) => {
 
 export const getAllForms = async (req, res, next) => {
 
-    const forms = await prisma.form.findMany({})
+    let forms = await prisma.form.findMany({})
+
+    let formData = await Promise.all( forms.map(async(form) =>{
+        let count = await prisma.submission.count({
+            where:{
+                formId: form.id
+            }
+        })
+
+        let data = {...form, total:count}
+
+        return data 
+    }))
+    
     res.status(200).json({
         success: true,
-        data: forms ? forms : []
+        data: formData ? formData : []
     })
 }
 
@@ -180,28 +193,33 @@ export const submitFormResponce = async (req, res, next) => {
     }
 }
 
-export const getFormSubmissions = async (req, res, next) =>{
+export const getFormSubmissions = async (req, res, next) => {
     try {
-        
+
         const formId = req.params.id
 
         const submissions = await prisma.form.findFirst({
-            where:{
+            where: {
                 id: formId
             },
-            include:{
-                submissions:true
-            }
+            include: {
+                submissions: {
+                    orderBy: {
+                        id: 'desc'
+                    }
+                }
+            },
+
         })
 
         res.status(200).json({
-            success:true,
-            data:submissions
+            success: true,
+            data: submissions
         })
 
 
     } catch (error) {
         return next(new ErrorHandler(error.message, 400))
-        
+
     }
 } 

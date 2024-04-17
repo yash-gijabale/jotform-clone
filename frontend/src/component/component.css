@@ -6,8 +6,22 @@
     background-color: #0A1551;
     position: fixed;
     z-index: 999;
+    display: flex;
 }
 
+.header_main > div{
+    width: 33.33%;
+    /* background-color: #333336; */
+    height: 100%;
+}
+
+.title_main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: 800;
+}
 
 .sub_header {
     width: 100vw;
@@ -135,14 +149,15 @@ a {
 
 .element_card {
     width: 100%;
-    height: 50px;
-    background-color: #676666;
+    height: 60px;
+    background-color: #434a60;
     /* margin: 10px auto; */
-    border-bottom: 1px solid #444343;
+    border-bottom: 1px solid #4a5361;
     display: flex;
     align-items: center;
-    /* padding-left: 2rem; */
-
+    /* margin-bottom: 5px; */
+    font-size: 17px;
+    font-weight: 500;
 }
 
 .element_card span {
@@ -156,3 +171,4 @@ a {
     text-align: start;
     margin-bottom: 1rem;
 }
+

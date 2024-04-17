@@ -6,7 +6,9 @@ import {
     CHANGE_CHECKBOX_LABLE,
     CHANGE_CHECKBOX_REQUIRED,
     CHANGE_CHECKBOX_TITLE,
-    SET_PREVIOUS_FORM
+    SET_PREVIOUS_FORM,
+    CHANGE_SELECT_LABLE,
+    SET_SELECT_OPTION
 } from '../constant/formConstant.js'
 
 
@@ -83,6 +85,14 @@ export const inputElementReducer = (state = {}, action) => {
             data[action.payload.id] = { ...data[action.payload.id], title: action.payload.title, type: action.payload.type }
             return data
 
+        case CHANGE_SELECT_LABLE:
+            data[action.payload.id] = { ...data[action.payload.id], lable: action.payload.lable, type: action.payload.type }
+            return data
+
+        case SET_SELECT_OPTION:
+            data[action.payload.id] = { ...data[action.payload.id], options: action.payload.options, type: action.payload.type }
+            return data
+
         case SET_PREVIOUS_FORM:
             return state = action.payload
 
@@ -112,4 +122,17 @@ export const checkboxElementReducer = (state = {}, action) => {
             return state
     }
 
+}
+
+export const selectElementReducer = (state = {}, action) => {
+    let data = { ...state }
+
+    switch (action.type) {
+        case CHANGE_SELECT_LABLE:
+            data[action.payload.id] = { ...data[action.payload.id], lable: action.payload.lable, type: action.payload.type }
+            return data
+
+        default:
+            return state
+    }
 }

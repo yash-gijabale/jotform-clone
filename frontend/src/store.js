@@ -6,7 +6,7 @@ import { addForm, checkboxElementReducer, formReducer, inputElementReducer } fro
 const reducers = combineReducers({
     forms: formReducer,
     newForm: addForm,
-    TextInput: inputElementReducer,
+    property: inputElementReducer,
     // CheckboxElement: checkboxElementReducer
 
 })

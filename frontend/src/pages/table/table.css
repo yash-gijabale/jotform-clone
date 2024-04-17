@@ -1,7 +1,126 @@
-.table_container{
+.table_container {
     width: 100vw;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     position: relative;
     /* background-color: aqua; */
-    top: 6rem;
+    top: 8rem;
+    overflow-y: hidden;
+}
+
+table {
+    /* border: 1px solid #c8c9cd; */
+    border-collapse: collapse;
+    width: 99%;
+    margin: auto;
+}
+
+table tbody td {
+    border: 1px solid #c8c9cd;
+    text-align: start;
+    padding-left: 10px;
+    height: 40px;
+    color: #565555;
+    font-weight: 500;
+
+}
+
+table thead th {
+    color: #363434;
+    border: 1px solid #c8c9cd;
+    height: 40px;
+    background-color: #e5e6eb;
+    padding-left: 10px;
+}
+
+.sub_header {
+    width: 100vw;
+    height: 50px;
+    background-color: #098232;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 1rem;
+}
+
+.tab{
+    width: 10%;
+    height: 90%;
+    background-color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #0d0e0d;
+    /* color: #098232; */
+    gap: 6px;
+}
+
+.filter_container {
+    /* background-color: #098232; */
+    width: 100%;
+    position: sticky;
+    top: 0;
+
+}
+
+.search_area,
+.download_area {
+    width: 50%;
+}
+
+.search_area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.download_area {
+    /* background-color: #098232; */
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2%;
+    gap: 10px;
+}
+
+.fixTableHead thead th {
+    position: sticky;
+    top: -1px;
+    z-index: 999;
+}
+
+.fixTableHead {
+    overflow-y: auto;
+    height: 67vh;
+    overflow-x: auto;
+    /* background-color: #098232; */
+}
+
+.menu_dots:hover{
+    margin: 0;
+}
+
+.table_footer{
+    width: 99%;
+    height: 30px;
+    background-color: #c8c9cd;
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 1rem;
+    font-weight: 500;
+    /* top: 5%; */
+}
+
+.no_data_warning{
+    width: 90%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+    font-size: 20px; 
+    font-weight: 500;
+    /* color: #086527; */
 }

@@ -9,7 +9,9 @@ import {
     CHANGE_CHECKBOX_LABLE,
     CHANGE_CHECKBOX_REQUIRED,
     CHANGE_CHECKBOX_TITLE,
-    SET_PREVIOUS_FORM
+    SET_PREVIOUS_FORM,
+    CHANGE_SELECT_LABLE,
+    SET_SELECT_OPTION
 } from '../constant/formConstant.js'
 import axios from 'axios'
 
@@ -94,7 +96,6 @@ export const setCheckboxElementProperty = (data, element) => (dispatch) => {
             property = {
                 id: element.id,
                 type: element.element,
-                type: element.element,
                 lable: data.lable
             }
 
@@ -136,12 +137,48 @@ export const setCheckboxElementProperty = (data, element) => (dispatch) => {
     }
 }
 
+export const setSelectElementProperty = (data, element) => (dispatch) => {
+    let property = {}
+    switch (data.type) {
+        case 'lable':
+            property = {
+                id: element.id,
+                type: element.element,
+                lable: data.lable
+            }
+
+            dispatch({
+                type: CHANGE_SELECT_LABLE,
+                payload: property
+            })
+            return
+
+        case 'options':
+            property = {
+                id: element.id,
+                type: element.element,
+                options: data.options
+            }
+
+            dispatch({
+                type: SET_SELECT_OPTION,
+                payload: property
+            })
+            return
+
+
+        default:
+            break;
+    }
+
+}
+
 export const getFormProperties = (formId) => async (dispatch) => {
     const { data } = await axios.get(`/api/v1/form/single/${formId}`)
     console.log(data.data)
     if (data.data.properties === null) {
         return {
-            properties:{
+            properties: {
                 currentId: 1,
                 element: [],
             }
@@ -174,7 +211,7 @@ export const getFormProperties = (formId) => async (dispatch) => {
     // console.log()
 
     return {
-        properties:pdata,
+        properties: pdata,
         formData: data.data
     }
 }

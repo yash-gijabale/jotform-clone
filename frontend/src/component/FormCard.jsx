@@ -69,7 +69,7 @@ const FormCard = ({ form, setDeleteProductIds, setDeleteFormId, setOpen }) => {
           }}
         >
           <h5 style={{ fontSize: "20px" }}>{form.name}</h5>
-          <span> <Link to={`/table/${form.id}`}>5 submissions.</Link> Updated on {new Date(form.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+          <span> <Link to={`/table/${form.id}`}>{form.total} submissions.</Link> Updated on {new Date(form.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
         </div>
       </div>
       <div className="form_card_2">

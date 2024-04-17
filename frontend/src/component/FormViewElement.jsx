@@ -1,5 +1,7 @@
 import Input from "@mui/joy/Input";
 import Checkbox from "@mui/joy/Checkbox";
+import Select from "@mui/joy/Select";
+import Option from "@mui/joy/Option";
 
 function TextInput({ property }) {
     const name = String(property.lable)
@@ -25,7 +27,7 @@ function TextInput({ property }) {
 }
 
 function CheckboxElement({ property }) {
-    const name = String(property.title)
+    const name = String(property.lable)
 
   return (
     <div
@@ -45,7 +47,38 @@ function CheckboxElement({ property }) {
   );
 }
 
+function SelectElement({ property }) {
+  const name = String(property.lable)
+
+  let options = (property.options) || [];
+
+  return (
+    <div
+      style={{
+        textAlign: "start",
+        display: "flex",
+        flexDirection: "column",
+        gap: "10px",
+        width: "80%",
+        marginTop: "5%",
+        margin: "auto",
+      }}
+    >
+      <lable>
+        {(property.lable)}
+      </lable>
+      <Select defaultValue="select" name={name.replace(/ +/g, "").toLowerCase()}>
+        {options &&
+          options.map((option) => {
+            return <Option key={option} value={option}>{option}</Option>;
+          })}
+      </Select>
+    </div>
+  );
+}
+
 export default {
   TextInput,
   CheckboxElement,
+  SelectElement
 };
