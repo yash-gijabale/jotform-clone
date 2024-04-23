@@ -11,7 +11,12 @@ import {
     CHANGE_CHECKBOX_TITLE,
     SET_PREVIOUS_FORM,
     CHANGE_SELECT_LABLE,
-    SET_SELECT_OPTION
+    SET_SELECT_OPTION,
+    CHANGE_DATE_LABLE,
+    CHANGE_DATE_PLACEHOLDER,
+    SET_DEFULT_MULTI_CHOISE_OPTION,
+    SET_LABLE_CHOISE_OPTION,
+    ADD_MORE_OPTION
 } from '../constant/formConstant.js'
 import axios from 'axios'
 
@@ -27,7 +32,7 @@ export const getAllForms = () => async (dispatch) => {
         // console.log(data)
         dispatch({
             type: ALL_FORM_SUCCESS,
-            payload: data
+            payload: data.data
         })
 
     } catch (error) {
@@ -173,6 +178,98 @@ export const setSelectElementProperty = (data, element) => (dispatch) => {
 
 }
 
+export const datePickerProperties = (data, element) => (dispatch) => {
+    let property = {}
+
+    switch (data.type) {
+        case 'lable':
+            property = {
+                id: element.id,
+                type: element.element,
+                lable: data.lable
+            }
+
+            dispatch({
+                type: CHANGE_DATE_LABLE,
+                payload: property
+            })
+            return
+
+        case 'placeholder':
+            property = {
+                id: element.id,
+                type: element.element,
+                placeholder: data.placeholder
+            }
+
+            dispatch({
+                type: CHANGE_DATE_PLACEHOLDER,
+                payload: property
+            })
+            return
+
+        default:
+            break;
+    }
+}
+
+export const setDefultOptions = (element) => (dispatch) => {
+    let defaultFiled = [
+        {
+            id: 1,
+            lable: "Type a Question",
+            value: "typeQuestion",
+            checked: false,
+        },
+        {
+            id: 2,
+            lable: "Type a Question",
+            value: "typeQuestion",
+            checked: true,
+        }
+    ]
+
+    let property = {
+        element,
+        defaultFiled
+    }
+
+    dispatch({
+        type: SET_DEFULT_MULTI_CHOISE_OPTION,
+        payload: property
+    })
+}
+
+export const changeOptionLable = (newlable, option, element) => (dispatch) => {
+    dispatch({
+        type: SET_LABLE_CHOISE_OPTION,
+        payload: {
+            id: option.id,
+            newLable: newlable,
+            eleId: element.id
+        }
+    })
+}
+
+export const addMoreOptions = (ele) => (dispatch) =>{
+    dispatch({
+        type: ADD_MORE_OPTION,
+        payload: ele
+    })
+}
+
+export const multipleChoiseProperties = (data, element) => async (dispatch) => {
+    switch (data.type) {
+        case 'setCheckbox':
+
+
+            break;
+
+        default:
+            break;
+    }
+}
+
 export const getFormProperties = (formId) => async (dispatch) => {
     const { data } = await axios.get(`/api/v1/form/single/${formId}`)
     console.log(data.data)
@@ -181,7 +278,8 @@ export const getFormProperties = (formId) => async (dispatch) => {
             properties: {
                 currentId: 1,
                 element: [],
-            }
+            },
+            formData: data.data
         }
     }
     dispatch({
@@ -203,15 +301,11 @@ export const getFormProperties = (formId) => async (dispatch) => {
         pdata.element.push(element)
         pdata.currentId = Number(key) + 1
 
-
     }
-
-
-
-    // console.log()
 
     return {
         properties: pdata,
         formData: data.data
     }
 }
+

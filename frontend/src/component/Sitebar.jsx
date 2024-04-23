@@ -15,27 +15,36 @@ import Sheet from "@mui/joy/Sheet";
 import Input from "@mui/joy/Input";
 import { useSelector, useDispatch } from "react-redux";
 import { addForm, getAllForms } from "../action/formAction";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../action/userAction";
 
 const Sitebar = () => {
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { form, loading } = useSelector((state) => state.newForm);
 
   const createForm = async (e) => {
-    
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.target));
     await dispatch(addForm(data));
   };
 
+  const logout = async () => {
+    const { data } = await axios.get("/api/v1/user/logout");
+    console.log(data);
+    dispatch(logoutUser())
+    navigate("/");
+  };
+
   useEffect(() => {
     console.log(loading);
     console.log(form);
-    if(form){
-      dispatch(getAllForms())
+    if (form) {
+      dispatch(getAllForms());
     }
-  }, [form,loading]);
+  }, [form, loading]);
 
   return (
     <div className="sitebar_main">
@@ -58,6 +67,12 @@ const Sitebar = () => {
                   <AddBoxIcon />
                 </ListItemDecorator>
                 Create Form
+              </ListItemButton>
+              <ListItemButton className="menu" onClick={logout}>
+                <ListItemDecorator>
+                  <AddBoxIcon />
+                </ListItemDecorator>
+                Logout
               </ListItemButton>
             </List>
           </div>

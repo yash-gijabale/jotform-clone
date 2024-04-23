@@ -34,7 +34,7 @@ const Build = () => {
 
   // const arr = [];
 
-  const AllElement = ["SelectElement", "TextInput", "CheckboxElement"];
+  const AllElement = ["SelectElement", "TextInput", "CheckboxElement", "PhoneNumber"];
   const AllElements = [
     {
       id: "TextInput",
@@ -55,13 +55,13 @@ const Build = () => {
     },
 
     {
-      id: "Phone",
-      title: "Phone",
+      id: "PhoneNumber",
+      title: "Phone Number",
       icon: ContactPhoneIcon,
     },
 
     {
-      id: "DatePicker",
+      id: "DateFiled",
       title: "Date Picker",
       icon: CalendarMonthIcon,
     },
@@ -69,6 +69,12 @@ const Build = () => {
     {
       id: "Address",
       title: "Address",
+      icon: LocationOnIcon,
+    },
+
+    {
+      id: "MultipleChoise",
+      title: "Multiple Choise",
       icon: LocationOnIcon,
     },
   ];
@@ -160,6 +166,7 @@ const Build = () => {
   const [formName, setFormName] = useState("");
   const getForm = async () => {
     let preForm = await dispatch(getFormProperties(id));
+    console.log(preForm)
     setFormElement(preForm.properties);
     setFormName((preForm.formData && preForm.formData.name) || "");
   };
@@ -219,9 +226,9 @@ const Build = () => {
         </div>
         <div className="build_area">
           <div className="form_box">
-            <h2 id="form_name" contenteditable="true">
+            <h1 id="form_name" contenteditable="true">
               {formName}
-            </h2>
+            </h1>
             {formElement.element.map((ele) => {
               const Component = Element[ele.element];
               // console.log(Component);

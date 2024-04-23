@@ -14,11 +14,13 @@ import Button from "@mui/joy/Button";
 import Input from "@mui/joy/Input";
 
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const { user } = useSelector((state) => state.user);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [allForms, setAllForms] = useState([]);
   const [filterForms, setFilterForms] = useState([]);
@@ -27,9 +29,19 @@ const Home = () => {
   const [deleteProductIds, setDeleteProductIds] = useState([]);
 
   const [deleteFormId, setDeleteFormId] = useState("");
+  const getMyForms = async () => {
+    try {
+      const { data } = await axios.get("api/v1/form/all");
+      console.log(data);
 
+      setAllForms(data.data);
+    } catch (error) {
+      console.log(error);
+      navigate("/");
+    }
+  };
   useEffect(() => {
-    setAllForms(forms);
+    getMyForms();
   }, [forms]);
 
   const deleteForm = async () => {
@@ -69,7 +81,7 @@ const Home = () => {
       );
     }
 
-    setDeleteProductIds([])
+    setDeleteProductIds([]);
     dispatch(getAllForms());
   };
 

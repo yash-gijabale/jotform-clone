@@ -148,7 +148,7 @@ const Table = () => {
           {submissions.length ? (
             <table>
               <thead>
-                <th className="fix">
+                <th className="fix" style={{width:'10px'}}>
                   <td style={{ width: "2%", textAlign: "start" }}>
                     <Checkbox
                       sx={{ marginRight: "10px" }}
@@ -177,6 +177,7 @@ const Table = () => {
                           className="fix"
                           style={{
                             width: "2%",
+                        
                             textAlign: "start",
                             display: "flex",
                             alignItems: "center",

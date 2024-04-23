@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Input from "@mui/joy/Input";
 import Switch from "@mui/joy/Switch";
 import Textarea from "@mui/joy/Textarea";
 
 import {
+  addMoreOptions,
+  changeOptionLable,
+  datePickerProperties,
   inputElementPlaceholder,
   inputElementProperty,
   setCheckboxElementProperty,
@@ -12,6 +15,7 @@ import {
 } from "../action/formAction";
 
 import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/joy/Button";
 
 function TextInputProperty({ currentElement }) {
   const dispatch = useDispatch();
@@ -101,7 +105,7 @@ function SelectElementProperty({ currentElement }) {
   };
 
   const addSelectOption = (e) => {
-    let a = e.target.value.split("\n");
+    let a = e.target.value.split(",");
     console.log(a);
     let type = {
       type: "options",
@@ -111,16 +115,16 @@ function SelectElementProperty({ currentElement }) {
     dispatch(setSelectElementProperty(type, currentElement));
   };
 
-  let preOptions = property[currentElement.id] && property[currentElement.id].options || []
-  let optionsText = ""
+  let preOptions =
+    (property[currentElement.id] && property[currentElement.id].options) || [];
+  let optionsText = preOptions;
 
-  preOptions.forEach(option => {
-    optionsText += `${option}\n`
-  })
+  // preOptions.forEach(option => {
+  //   optionsText += `${option}\n`
+  // })
 
-  console.log(optionsText)
+  console.log(optionsText);
 
-  
   return (
     <div>
       <h3 style={{ color: "white" }}>{currentElement.element}</h3>
@@ -159,8 +163,6 @@ function SelectElementProperty({ currentElement }) {
     </div>
   );
 }
-
-
 
 function CheckboxElementProperty({ currentElement }) {
   const dispatch = useDispatch();
@@ -252,8 +254,278 @@ function CheckboxElementProperty({ currentElement }) {
     </div>
   );
 }
+
+function PhoneNumberProperty({ currentElement }) {
+  const dispatch = useDispatch();
+  const [lable, setLable] = useState("");
+  const changeInputLable = (e) => {
+    setLable(e.target.value);
+    dispatch(inputElementProperty(e.target.value, currentElement));
+  };
+
+  const changePlaceholder = (e) => {
+    setLable(e.target.value);
+    dispatch(inputElementPlaceholder(e.target.value, currentElement));
+  };
+
+  const data = useSelector((state) => state.property);
+  console.log(data);
+
+  return (
+    <div>
+      <h3 style={{ color: "white" }}>{currentElement.element}</h3>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Field Lable</label>
+        <Input
+          size="sm"
+          placeholder="Enter Lable"
+          onChange={(e) => changeInputLable(e)}
+          value={
+            data[currentElement.id] && data[currentElement.id].lable
+              ? data[currentElement.id].lable
+              : ""
+          }
+          sx={{
+            backgroundColor: "transparent",
+            marginTop: "10px",
+            color: "white",
+          }}
+        />
+      </div>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "15px auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Field Placeholder</label>
+        <Input
+          size="sm"
+          placeholder="Enter placeholder"
+          onChange={(e) => changePlaceholder(e)}
+          value={
+            data[currentElement.id] && data[currentElement.id].placeholder
+              ? data[currentElement.id].placeholder
+              : ""
+          }
+          sx={{
+            backgroundColor: "transparent",
+            marginTop: "10px",
+            color: "white",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function DateFiledProperty({ currentElement }) {
+  const dispatch = useDispatch();
+  const changeInputLable = (e) => {
+    let type = {
+      type: "lable",
+      lable: e.target.value,
+    };
+    dispatch(datePickerProperties(type, currentElement));
+  };
+
+  const changePlaceholder = (e) => {
+    let type = {
+      type: "placeholder",
+      placeholder: e.target.value,
+    };
+    dispatch(datePickerProperties(type, currentElement));
+  };
+
+  const data = useSelector((state) => state.property);
+  console.log(data);
+
+  return (
+    <div>
+      <h3 style={{ color: "white" }}>{currentElement.element}</h3>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Field Lable</label>
+        <Input
+          size="sm"
+          placeholder="Enter Lable"
+          onChange={(e) => changeInputLable(e)}
+          value={
+            data[currentElement.id] && data[currentElement.id].lable
+              ? data[currentElement.id].lable
+              : ""
+          }
+          sx={{
+            backgroundColor: "transparent",
+            marginTop: "10px",
+            color: "white",
+          }}
+        />
+      </div>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "15px auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Field Placeholder</label>
+        <Input
+          size="sm"
+          placeholder="Enter placeholder"
+          onChange={(e) => changePlaceholder(e)}
+          value={
+            data[currentElement.id] && data[currentElement.id].placeholder
+              ? data[currentElement.id].placeholder
+              : ""
+          }
+          sx={{
+            backgroundColor: "transparent",
+            marginTop: "10px",
+            color: "white",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+// MultipleChoise
+function MultipleChoiseProperty({ currentElement }) {
+  const dispatch = useDispatch();
+  const [option, setOption] = useState([]);
+  const [optionCount, setOptionCount] = useState(0);
+  const changeInputLable = (e) => {
+    let type = {
+      type: "lable",
+      lable: e.target.value,
+    };
+    dispatch(datePickerProperties(type, currentElement));
+  };
+
+  const HandlechangeOptionLable = (e, option) => {
+    let value = e.target.value;
+    dispatch(changeOptionLable(value, option, currentElement));
+  };
+
+  const HanldeaddMoreOption = (ele) => {
+    let newOption = {
+      data: {
+        id: optionCount + 1,
+        lable: "Type a Question",
+        value: "typeQuestion",
+        checked: false,
+      },
+      element : ele
+    };
+
+    dispatch(addMoreOptions(newOption));
+  };
+
+  const data = useSelector((state) => state.property);
+  useEffect(() => {
+    setOption(
+      data[currentElement.id] ? data[currentElement.id].defultProp : []
+    );
+    setOptionCount(
+      data[currentElement.id] ? data[currentElement.id].defultProp.length : 0
+    );
+  }, [data]);
+  console.log(option);
+
+  return (
+    <div>
+      <h3 style={{ color: "white" }}>{currentElement.element}</h3>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Field Lable</label>
+        <Input
+          size="sm"
+          placeholder="Enter Lable"
+          onChange={(e) => changeInputLable(e)}
+          value={
+            data[currentElement.id] && data[currentElement.id].lable
+              ? data[currentElement.id].lable
+              : ""
+          }
+          sx={{
+            backgroundColor: "transparent",
+            marginTop: "10px",
+            color: "white",
+          }}
+        />
+      </div>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "15px auto",
+          textAlign: "start",
+        }}
+      >
+        <label>
+          Add Options
+          <Button
+            sx={{ marginLeft: "20px" }}
+            onClick={() => HanldeaddMoreOption(currentElement)}
+            color="neutral"
+            size="sm"
+          >
+            +
+          </Button>
+        </label>
+        {option.map((ele) => {
+          return (
+            <Input
+              size="sm"
+              // placeholder="Enter Lable"
+              onChange={(e) => HandlechangeOptionLable(e, ele)}
+              value={ele.lable}
+              sx={{
+                backgroundColor: "transparent",
+                marginTop: "10px",
+                color: "white",
+              }}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 export default {
   TextInputProperty,
   SelectElementProperty,
   CheckboxElementProperty,
+  PhoneNumberProperty,
+  DateFiledProperty,
+  MultipleChoiseProperty,
 };

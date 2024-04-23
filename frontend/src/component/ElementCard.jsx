@@ -20,7 +20,7 @@ const ElementCard = ({ formElement, setFormElement }) => {
   };
 
   return (
-    <div className="element_card" onClick={handleChange}>
+    <div className="element_card" onClick={handleChange} style={{cursor:"pointer"}}>
       <div style={{
         width:'15%',
         height:'100%',

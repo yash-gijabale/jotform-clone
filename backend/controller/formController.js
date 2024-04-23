@@ -7,6 +7,7 @@ const prisma = new PrismaClient()
 export const newForm = async (req, res, next) => {
     try {
         let formData = req.body
+        formData['userId'] = req.user.id
         const form = await prisma.form.create({
             data: formData
         })
@@ -55,21 +56,25 @@ export const updateForm = async (req, res, next) => {
 }
 
 export const getAllForms = async (req, res, next) => {
+    console.log("user erwsdfsf",req.user)
+    let forms = await prisma.form.findMany({
+        where: {
+            userId: req.user.id
+        }
+    })
 
-    let forms = await prisma.form.findMany({})
-
-    let formData = await Promise.all( forms.map(async(form) =>{
+    let formData = await Promise.all(forms.map(async (form) => {
         let count = await prisma.submission.count({
-            where:{
+            where: {
                 formId: form.id
             }
         })
 
-        let data = {...form, total:count}
+        let data = { ...form, total: count }
 
-        return data 
+        return data
     }))
-    
+
     res.status(200).json({
         success: true,
         data: formData ? formData : []
