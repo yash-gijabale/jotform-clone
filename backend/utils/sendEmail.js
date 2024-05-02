@@ -12,8 +12,8 @@ const transporter = nodeMailer.createTransport({
     port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-        user: "panda5050e@gmail.com",
-        pass: "ngurvddwvpzdguan",
+        user: "ttt@gmail.com",
+        pass: "tt",
     },
 });
 const readFileAsync = promisify(fs.readFile);
