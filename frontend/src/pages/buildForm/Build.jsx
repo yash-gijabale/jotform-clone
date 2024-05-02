@@ -26,7 +26,7 @@ import Chip from "@mui/joy/Chip";
 import ChipDelete from "@mui/joy/ChipDelete";
 import Button from "@mui/joy/Button";
 import { useSelector } from "react-redux";
-import { getFormProperties } from "../../action/formAction";
+import { getFormProperties, removeElement } from "../../action/formAction";
 import axios from "axios";
 
 const Build = () => {
@@ -34,7 +34,12 @@ const Build = () => {
 
   // const arr = [];
 
-  const AllElement = ["SelectElement", "TextInput", "CheckboxElement", "PhoneNumber"];
+  const AllElement = [
+    "SelectElement",
+    "TextInput",
+    "CheckboxElement",
+    "PhoneNumber",
+  ];
   const AllElements = [
     {
       id: "TextInput",
@@ -120,7 +125,19 @@ const Build = () => {
     setPropertyShow(false);
   };
 
-  const removeElement = (ele) => {};
+  const removeElementHandle = (ele) => {
+    console.log(ele);
+    let filtedElement = formElement.element.filter((element) => {
+      return ele.id != element.id;
+    });
+
+    setFormElement((pre) => {
+      return { ...pre, element: filtedElement };
+    });
+
+    dispatch(removeElement(ele))
+    console.log(formElement);
+  };
 
   const formProperty = useSelector((state) => state.property);
 
@@ -132,9 +149,7 @@ const Build = () => {
     let formColumnData = [];
 
     let formName = document.querySelector("#form_name");
-    // console.log(formName.innerText)
-    // return
-    //For Submission Date column
+
     formColumnData.push({
       id: "submissionDate",
       name: "Submission Date",
@@ -166,7 +181,7 @@ const Build = () => {
   const [formName, setFormName] = useState("");
   const getForm = async () => {
     let preForm = await dispatch(getFormProperties(id));
-    console.log(preForm)
+    console.log(preForm);
     setFormElement(preForm.properties);
     setFormName((preForm.formData && preForm.formData.name) || "");
   };
@@ -251,7 +266,7 @@ const Build = () => {
                       variant="soft"
                       color="danger"
                       sx={{ cursor: "pointer" }}
-                      onClick={() => removeElement(ele)}
+                      onClick={() => removeElementHandle(ele)}
                     >
                       <DeleteIcon />
                     </Chip>

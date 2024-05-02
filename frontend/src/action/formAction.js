@@ -16,7 +16,9 @@ import {
     CHANGE_DATE_PLACEHOLDER,
     SET_DEFULT_MULTI_CHOISE_OPTION,
     SET_LABLE_CHOISE_OPTION,
-    ADD_MORE_OPTION
+    ADD_MORE_OPTION,
+    SET_MAULTI_CHOISE_OPTION_LAYOUT,
+    DELETE_ELEMENT
 } from '../constant/formConstant.js'
 import axios from 'axios'
 
@@ -255,6 +257,23 @@ export const addMoreOptions = (ele) => (dispatch) =>{
     dispatch({
         type: ADD_MORE_OPTION,
         payload: ele
+    })
+}
+
+export const setOptionLayout = (layout, element) => (dispatch) =>{
+    dispatch({
+        type: SET_MAULTI_CHOISE_OPTION_LAYOUT,
+        payload: {
+            id: element.id,
+            layout: layout
+        }
+    })
+}
+
+export const removeElement = (element) => (dispatch) =>{
+    dispatch({
+        type: DELETE_ELEMENT,
+        payload: element
     })
 }
 

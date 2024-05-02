@@ -2,7 +2,7 @@ import { React, Fragment, useEffect, useState, useRef } from "react";
 import Header from "../../component/Header";
 import "./table.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Checkbox from "@mui/joy/Checkbox";
 import Input from "@mui/joy/Input";
@@ -18,7 +18,13 @@ import MenuItem from "@mui/joy/MenuItem";
 import MoreVert from "@mui/icons-material/MoreVert";
 import table from "../../asset/table.png";
 
+import Modal from "@mui/joy/Modal";
+import ModalClose from "@mui/joy/ModalClose";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
+
 import TableChartIcon from "@mui/icons-material/TableChart";
+import BtnLoader from "../../component/BtnLoader";
 
 const Table = () => {
   const { id } = useParams();
@@ -29,6 +35,11 @@ const Table = () => {
 
   const [responceId, setResponceId] = useState({});
   const [responceIdCount, setResponceIdCount] = useState(0);
+
+  const [doenloadLink, setDownloadLink] = useState({
+    loder: false,
+    link:''
+  });
 
   const getAllFormResponce = async () => {
     const { data } = await axios.get(`/api/v1/form/submissions/${id}`);
@@ -78,6 +89,16 @@ const Table = () => {
 
   console.log(responceId);
   console.log(responceIdCount);
+
+  const download = async () => {
+    setDownloadLink({...doenloadLink, loder: true});
+    const { data } = await axios.get(`/api/v1/form/download/${id}`);
+    console.log(data);
+    setDownloadLink({loader: false, link:data.data.url})
+    setOpen(true)
+  };
+
+  const [open, setOpen] = useState(false);
   return (
     <Fragment>
       <Header bg={"#fff"} title={form.name} />
@@ -136,11 +157,18 @@ const Table = () => {
             )}
             <Button
               color="success"
-              onClick={function () {}}
+              onClick={download}
               variant="solid"
               value="Delete"
+              sx={{minWidth:'120px'}}
             >
-              <ArrowCircleDownIcon sx={{ marginRight: "5px" }} /> Download
+              {doenloadLink.loder ? (
+                <BtnLoader />
+              ) : (
+                <Fragment>
+                  <ArrowCircleDownIcon sx={{ marginRight: "5px" }} /> Download
+                </Fragment>
+              )}
             </Button>
           </div>
         </div>
@@ -148,7 +176,7 @@ const Table = () => {
           {submissions.length ? (
             <table>
               <thead>
-                <th className="fix" style={{width:'10px'}}>
+                <th className="fix" style={{ width: "10px" }}>
                   <td style={{ width: "2%", textAlign: "start" }}>
                     <Checkbox
                       sx={{ marginRight: "10px" }}
@@ -177,7 +205,7 @@ const Table = () => {
                           className="fix"
                           style={{
                             width: "2%",
-                        
+
                             textAlign: "start",
                             display: "flex",
                             alignItems: "center",
@@ -239,6 +267,47 @@ const Table = () => {
           <span>TOTAL: {submissions.length}</span>
         </div>
       </div>
+
+      <Modal
+        aria-labelledby="modal-title"
+        aria-describedby="modal-desc"
+        open={open}
+        onClose={() => setOpen(false)}
+        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      >
+        <Sheet
+          variant="outlined"
+          sx={{
+            maxWidth: 500,
+            width: 200,
+            borderRadius: "md",
+            p: 3,
+            boxShadow: "lg",
+          }}
+        >
+          <ModalClose variant="plain" sx={{ m: 1 }} />
+          <Typography
+            component="h2"
+            id="modal-title"
+            level="h4"
+            textColor="inherit"
+            fontWeight="lg"
+            mb={1}
+          >
+            Your download Link
+          </Typography>
+          <a href={doenloadLink.link} download={true}>
+            <Button
+              variant="outlined"
+              color="neutral"
+              className="btn_primary"
+              sx={{ color: "white", marginRight: "20px" }}
+            >
+              Download
+            </Button>
+          </a>
+        </Sheet>
+      </Modal>
     </Fragment>
   );
 };

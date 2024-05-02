@@ -1,8 +1,10 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import ErrorHandler from "../utils/ErrorHandler.js";
+import { sendmail } from "../utils/sendEmail.js";
+import { createExel } from "../utils/excel.js";
+
 
 const prisma = new PrismaClient()
-
 
 export const newForm = async (req, res, next) => {
     try {
@@ -56,7 +58,7 @@ export const updateForm = async (req, res, next) => {
 }
 
 export const getAllForms = async (req, res, next) => {
-    console.log("user erwsdfsf",req.user)
+    console.log("user erwsdfsf", req.user)
     let forms = await prisma.form.findMany({
         where: {
             userId: req.user.id
@@ -178,6 +180,17 @@ export const submitFormResponce = async (req, res, next) => {
         const formResponce = req.body
         console.log(formResponce)
 
+        const formEmail = await prisma.form.findFirst({
+            where: {
+                id: formId
+            },
+            include: {
+                user: true
+            }
+        })
+
+        console.log(formEmail)
+
         const data = {
             responce: formResponce,
             formId
@@ -187,12 +200,16 @@ export const submitFormResponce = async (req, res, next) => {
             data
         })
 
+
         res.status(200).json({
             success: true,
             data: submissionData
         })
 
+        sendmail(res, formEmail, formResponce)
+
     } catch (error) {
+        console.log('err', error)
         return next(new ErrorHandler(error.message, 400))
 
     }
@@ -227,4 +244,74 @@ export const getFormSubmissions = async (req, res, next) => {
         return next(new ErrorHandler(error.message, 400))
 
     }
-} 
+}
+
+export const upadateFormEmail = async (req, res, next) => {
+    try {
+
+        const formId = req.params.id
+
+        const form = await prisma.form.update({
+            where: {
+                id: formId
+            },
+            data: req.body
+        })
+
+        res.status(200).json({
+            success: true,
+            data: form
+        })
+
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 400))
+    }
+}
+
+export const getFormEail = async (req, res, next) => {
+    try {
+        const formId = req.params.id
+        const form = await prisma.form.findFirst({
+            where: {
+                id: formId
+            },
+            select: {
+                email: true
+            }
+        })
+
+        res.status(200).json({
+            success: true,
+            data: form
+        })
+
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 400))
+    }
+}
+
+export const downloadSubmissions = async (req, res, next) => {
+    try {
+
+        const formId = req.params.id
+        const form = await prisma.form.findFirst({
+            where: {
+                id: formId
+            },
+            include:{
+                submissions: true
+            }
+        })
+        const submission = await prisma.submission.findMany({
+            where: {
+                formId
+            }
+        })
+        await createExel(res, form)
+        // console.log(submission)
+       
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 400))
+
+    }
+}

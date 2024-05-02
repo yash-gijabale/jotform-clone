@@ -13,7 +13,9 @@ import {
     CHANGE_DATE_PLACEHOLDER,
     SET_DEFULT_MULTI_CHOISE_OPTION,
     SET_LABLE_CHOISE_OPTION,
-    ADD_MORE_OPTION
+    ADD_MORE_OPTION,
+    SET_MAULTI_CHOISE_OPTION_LAYOUT,
+    DELETE_ELEMENT
 } from '../constant/formConstant.js'
 
 
@@ -113,14 +115,14 @@ export const inputElementReducer = (state = {}, action) => {
             return data
 
         case SET_DEFULT_MULTI_CHOISE_OPTION:
-            data[action.payload.element.id] = { ...data[action.payload.element.id], defultProp: action.payload.defaultFiled, type: action.payload.element.element }
+            data[action.payload.element.id] = { ...data[action.payload.element.id], defultProp: action.payload.defaultFiled, type: action.payload.element.element, layout: 'row' }
             return data
 
         case SET_LABLE_CHOISE_OPTION:
             let oldProps = data[action.payload.eleId].defultProp
             let updatedProps = oldProps.map(option => {
                 if (option.id === action.payload.id) {
-                    return { ...option, lable: action.payload.newLable }
+                    return { ...option, lable: action.payload.newLable, value: action.payload.newLable }
                 }
 
                 return option
@@ -129,12 +131,21 @@ export const inputElementReducer = (state = {}, action) => {
 
             return data
 
+        case SET_MAULTI_CHOISE_OPTION_LAYOUT:
+            data[action.payload.id] = { ...data[action.payload.id],layout: action.payload.layout }
+            return data
+
         case ADD_MORE_OPTION:
             console.log(action.payload)
             let oldOptions = data[action.payload.element.id].defultProp
             let newOptions = [...oldOptions, action.payload.data]
             data[action.payload.element.id] = { ...data[action.payload.element.id], defultProp: newOptions }
             return data
+
+
+        case DELETE_ELEMENT:
+            delete state[Number(action.payload.id)]
+            return state
 
 
         case SET_PREVIOUS_FORM:

@@ -4,6 +4,9 @@ import Input from "@mui/joy/Input";
 import Switch from "@mui/joy/Switch";
 import Textarea from "@mui/joy/Textarea";
 
+import Box from "@mui/joy/Box";
+import Radio from "@mui/joy/Radio";
+
 import {
   addMoreOptions,
   changeOptionLable,
@@ -11,6 +14,7 @@ import {
   inputElementPlaceholder,
   inputElementProperty,
   setCheckboxElementProperty,
+  setOptionLayout,
   setSelectElementProperty,
 } from "../action/formAction";
 
@@ -414,6 +418,7 @@ function MultipleChoiseProperty({ currentElement }) {
   const dispatch = useDispatch();
   const [option, setOption] = useState([]);
   const [optionCount, setOptionCount] = useState(0);
+
   const changeInputLable = (e) => {
     let type = {
       type: "lable",
@@ -435,7 +440,7 @@ function MultipleChoiseProperty({ currentElement }) {
         value: "typeQuestion",
         checked: false,
       },
-      element : ele
+      element: ele,
     };
 
     dispatch(addMoreOptions(newOption));
@@ -451,6 +456,13 @@ function MultipleChoiseProperty({ currentElement }) {
     );
   }, [data]);
   console.log(option);
+
+  const [selectedValue, setSelectedValue] = useState(data[currentElement.id].layout || 'row');
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+    dispatch(setOptionLayout(event.target.value, currentElement))
+  };
 
   return (
     <div>
@@ -516,6 +528,35 @@ function MultipleChoiseProperty({ currentElement }) {
             />
           );
         })}
+      </div>
+
+      <div
+        style={{
+          width: "90%",
+          color: "white",
+          margin: "auto",
+          textAlign: "start",
+        }}
+      >
+        <label>Layout</label>
+        <Box sx={{ display: "flex", gap: 2}}>
+          <Radio
+            checked={selectedValue === "row"}
+            onChange={handleChange}
+            value="row"
+            name="radio-buttons"
+            label="Row"
+            slotProps={{ input: { "aria-label": "A" } }}
+          />
+          <Radio
+            checked={selectedValue === "column"}
+            onChange={handleChange}
+            value="column"
+            label="Column"
+            name="radio-buttons"
+            slotProps={{ input: { "aria-label": "B" } }}
+          />
+        </Box>
       </div>
     </div>
   );

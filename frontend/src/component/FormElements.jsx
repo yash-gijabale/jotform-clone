@@ -154,7 +154,7 @@ export const MultipleChoise = ({ currentElement }) => {
         {(data[currentElement.id] && data[currentElement.id].lable) ||
           "Multiple Choise"}
       </lable>
-      <Box sx={{ display: "flex", gap: 3, marginTop: "10px", flexWrap:'wrap' }}>
+      <Box sx={{ display: "flex", gap: 3, marginTop: "10px", flexWrap:'wrap', flexDirection: data[currentElement.id] ? data[currentElement.id].layout :'row' }}>
         {data[currentElement.id] && data[currentElement.id].defultProp.map((ele) => {
           return <Checkbox label={ele.lable} />;
         })}

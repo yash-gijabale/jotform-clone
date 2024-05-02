@@ -5,17 +5,23 @@ import { useEffect } from 'react';
 import store from './store';
 import { getAllForms } from './action/formAction';
 
-import {Routes, Route} from 'react-router-dom'
+import {Routes, Route, useNavigate} from 'react-router-dom'
 import Build from './pages/buildForm/Build';
 import View from './pages/view/View';
 import Table from './pages/table/Table';
 import Login from './pages/login/Login';
 import { loadUser } from './action/userAction';
+import FormSetting from './pages/formSetting/FormSetting';
 
 function App() {
+  const navigate = useNavigate()
 
   useEffect(()=>{
-    store.dispatch(loadUser())
+    try{
+      store.dispatch(loadUser())
+    }catch(err){
+      navigate('/')
+    }
     // store.dispatch(getAllForms())
   })
   return (
@@ -26,6 +32,7 @@ function App() {
       <Route path='/build/:id' Component={Build} />
       <Route path='/view/:id' Component={View} />
       <Route path='/table/:id' Component={Table} />
+      <Route path='/build/setting/:id' Component={FormSetting} />
      </Routes>
   
     </div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Welcome to Our Platform</title>
+  <style>
+    .main {
+      width: 90%;
+      margin: auto;
+      height: auto;
+      min-height: 90%;
+      border-radius: 5px;
+      background-color: rgb(238, 236, 236) !important;
+      box-shadow: 1px 1px 10px 1px gray;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .box{
+      width: 60%;
+      height: auto;
+    }
+
+    h1 {
+      color: rgb(243, 162, 64);
+    }
+  </style>
+</head>
+
+
+<body>
+  <div class="main">
+    <div class="box">
+      <h1>{{user}}</h1>
+      <h3><b>You got new submission:</b></h3>
+      <ul>
+        {{#each responce}}
+        <li><b>{{@key}}:</b> {{this}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+
+</body>
+
+</html>
