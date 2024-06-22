@@ -12,8 +12,8 @@ const transporter = nodeMailer.createTransport({
     port: 587,
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
-        user: "aaaa@gmail.com",
-        pass: "aaaa",
+        user: "",
+        pass: "",
     },
 });
 const readFileAsync = promisify(fs.readFile);
@@ -37,7 +37,7 @@ export const sendmail = async (res, formEmail, responce) => {
         }))
    
         const info = await transporter.sendMail({
-            from: 'panda5050e@gmail.com', 
+            from: '', 
             to: formEmail.email, 
             subject: "Hello ✔",
             html: template({
